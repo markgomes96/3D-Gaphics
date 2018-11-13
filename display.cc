@@ -2,16 +2,19 @@
 #include "constants.h"
 #include "structs.h"
 #include "prototypes.h"
-#include "Graphics.h"
 #include "globals.h"
 
 void display( void )
 {
 	glClear(GL_COLOR_BUFFER_BIT);		//clear the window
 
-	glColor3f(1.0, 1.0, 1.0);
+	glColor3f(0.0, 0.0, 0.0);
 	glRecti(viewportMinX, viewportMinY, viewportMaxX, viewportMaxY);    //set viewport
 
+	glMatrixMode(GL_MODELVIEW);
+   	glLoadIdentity ();             /* clear the matrix */
+
+	/*
 	int vertCount = vertexlist.size();
 	vertex templist[vertCount*2];			//create temp array of current vertexlist
 	vertex *tmp;					//pointer to temp array
@@ -23,11 +26,6 @@ void display( void )
 		templist[i].z = 0.0;
 		templist[i].w = 0.0;
 	}
-
-	vertex boundlist[4] = {vertex(viewportMinX, viewportMinY, 0.0, 1.0), vertex(viewportMaxX, viewportMinY, 0.0, 1.0), 
-				vertex(viewportMaxX, viewportMaxY, 0.0, 1.0), vertex(viewportMinX, viewportMaxY, 0.0, 1.0)};
-	vertex *boundtmp;
-	boundtmp = &boundlist[0];
 
 	vector<vertex>::iterator it;
 	int index = 0;
@@ -41,7 +39,7 @@ void display( void )
 	}
 
 	if(animState == resetanim)	//reset transformation variables to default
-	{ 
+	{ l
 		deltaspin = 0.0;		
 		spin = 0.0;
 		scalarvect = vector3D(1.0, 1.0, 1.0);
@@ -50,8 +48,6 @@ void display( void )
 	}
 
 	PipeLine(tmp, vertCount);		//apply transformations	 
-	
-	clipPolygon(tmp, vertCount, boundtmp, 4);		//clip polygon by viewport boundaries
 
 	vector<vertex> drawlist;
 	drawlist.clear();
@@ -61,38 +57,20 @@ void display( void )
 		drawlist.push_back(templist[ind]);
 		ind++;
 	}
+	*/
 
-	int dc = drawlist.size();
-	vertex drawarray[dc];			//create temp array of drawlist
-	vertex *dp;					//pointer to draw array
-	dp = &drawarray[0];
-	for(int i = 0; i < dc; i++)
-	{
-		drawarray[i].x = drawlist[i].x;
-		drawarray[i].y = drawlist[i].y;
-		drawarray[i].z = drawlist[i].z;
-		drawarray[i].w = drawlist[i].w;
-	}
+	struct box faces[6];
 
-	switch(displayState)		//display the transformed points
-	{
-		case outline : 
-			Graphics::drawOutline(drawlist, color(1.0, 0.0, 0.0));   
-			break;
+	defineHouse(&faces[0]);
 
-  		case tessfill :
-			tessellate(dp, dc);
-			Graphics::drawTessPolygon(trianglelist, color(0.0, 0.0, 1.0));  
-			break;
+	//gluLookAt (0.0, 0.0, 10.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+	gluLookAt (6.0, 8.0, 4.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
 
-   		case tesstriangle :  
-			tessellate(dp, dc);
-			Graphics::drawTessTriangle(trianglelist, color(0.0, 1.0, 0.0)); 
-			break;
-	}
-	trianglelist.clear();
+	glEnable(GL_DEPTH_TEST);
+  	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	Graphics :: drawCenterPoint(cp, color(1.0, 0.5, 0.8));	//draw current center point
+	drawAxes(5);
+	drawHouse(&faces[0]);
 
 	glutSwapBuffers(); 				//swap buffers to draw new frame
 }

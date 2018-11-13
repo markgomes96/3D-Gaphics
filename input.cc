@@ -2,7 +2,6 @@
 #include "constants.h"
 #include "prototypes.h"
 
-#include "Graphics.h"
 #include "globals.h"
 
 void mouse( int button, int state, int x, int y )

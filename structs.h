@@ -23,6 +23,29 @@ typedef struct vertex
 	}
 } vertex;
 
+typedef struct colortype
+{
+	float red;
+	float green;
+	float blue;
+    
+	colortype()
+	{};
+
+	colortype(float _red, float _green, float _blue)
+	{
+		red = _red;
+		green = _green;
+		blue = _blue;
+	}
+} colortype;
+
+typedef struct box 
+{
+	vertex point[4];
+	colortype color;	
+} box;
+
 typedef struct vector3D		//stores data for a 3D vector used for calcualtions
 {
 	float x;
@@ -56,22 +79,5 @@ typedef struct triangle		//stores vertexes for a triangle used for tesselation
 		v3 = _v3;
 	}
 } triangle;
-
-typedef struct color
-{
-	float red;
-	float green;
-	float blue;
-    
-	color()
-	{};
-
-	color(float _red, float _green, float _blue)
-	{
-		red = _red;
-		green = _green;
-		blue = _blue;
-	}
-} color;
 
 #endif
