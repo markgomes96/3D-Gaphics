@@ -1,3 +1,14 @@
-# Programming Assignment 3
+# 2D Transformation and Animation
 
-3D Transformations, Perspectives, Animations, and User Interactions
+Programming Assignment 3 - 3D Transformation, Perspective, Animations, and User Interface
+Developed by Mark Gomes
+11/13/18
+=======
+
+To COMPILE:
+
+    make
+
+To RUN:
+
+    run
