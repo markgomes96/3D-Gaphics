@@ -18,7 +18,7 @@ int main(int argc, char** argv)
 	glutInitWindowPosition(WINDOW_POS_X, WINDOW_POS_Y); 		// place window top left on display
 	glutCreateWindow("3D Graphics");	                        //window title
 
-	glClearColor(1.0, 1.0, 1.0, 1.0);           //white background
+	glClearColor(0.0, 0.0, 0.0, 1.0);           //black background
 	glColor3f(1.0, 0.0, 0.0);                   // draw in red
 	glPointSize(1.0);
 	glLineWidth(1.0);

@@ -6,11 +6,6 @@
 
 void display( void )
 {
-	glClear(GL_COLOR_BUFFER_BIT);		//clear the window
-
-	glColor3f(0.0, 0.0, 0.0);
-	glRecti(viewportMinX, viewportMinY, viewportMaxX, viewportMaxY);    //set viewport
-
 	glMatrixMode(GL_MODELVIEW);
    	glLoadIdentity ();             /* clear the matrix */
 
@@ -59,17 +54,20 @@ void display( void )
 	}
 	*/
 
-	struct box faces[6];
+	struct box faces[7];
 
 	defineHouse(&faces[0]);
 
 	//gluLookAt (0.0, 0.0, 10.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
-	gluLookAt (6.0, 8.0, 4.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
+	gluLookAt (16.0, 19.0, 12.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
 
 	glEnable(GL_DEPTH_TEST);
   	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	drawAxes(5);
+	glColor3f(1.0, 1.0, 1.0);			//set color to white
+	glRecti(VIEWPORT_MIN_X, VIEWPORT_MIN_Y, VIEWPORT_MAX_X, VIEWPORT_MAX_Y);    //set viewport
+
+	drawAxes(20);
 	drawHouse(&faces[0]);
 
 	glutSwapBuffers(); 				//swap buffers to draw new frame

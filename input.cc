@@ -70,6 +70,7 @@ bool checkBounds(int x, int y)		//returns true is within bounds
 
 void keyboard( unsigned char key, int x, int y )
 { 
+	/*HANDLED BY DROP DOWN MENU
 	if ( key == 'f' || key == 'F')		// Fill the polygon in with tesselation
 	{
 		displayState = tessfill;
@@ -82,25 +83,20 @@ void keyboard( unsigned char key, int x, int y )
 	{
 		displayState = outline;
 	}
-	if ( key == 'r' || key == 'R')		//reflect current image about the vertical axis at center point
-	{
-		reflection = reflection * -1;
-		spin = spin * -1;
-	}
+	*/
+
+	
 	if ( key == 's' || key == 'S')		//stops any animations
 	{
 		animState = stopanim;
 	}
-	if ( key == 'i' || key == 'I')		//stops any animations and return tree to intial position
+	if ( key == 'r')		//return house to original position and size
 	{
 		animState = resetanim;
 	}
-	if ( key == 'b' || key == 'B')		//toggles on/off bound resizing
+	if ( key == 'R')		//reset house -> original position / size; reset camera -> original position / perspective
 	{
-		if(resizeBoundMode)
-			resizeBoundMode = false;
-		else
-			resizeBoundMode = true;
+		animState = hardresetanim;
 	}
 	if ( key == 'q' || key == 'Q') 		//exit the program
 	{

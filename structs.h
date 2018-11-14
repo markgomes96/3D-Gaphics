@@ -2,7 +2,7 @@
 #define STRUCTS
 
 enum DisplayState { outline, tessfill, tesstriangle };
-enum AnimState { playanim, stopanim, resetanim };
+enum AnimState { playanim, stopanim, resetanim, hardresetanim};
 
 typedef struct vertex 
 { 
@@ -42,7 +42,7 @@ typedef struct colortype
 
 typedef struct box 
 {
-	vertex point[4];
+	vertex point[5];
 	colortype color;	
 } box;
 

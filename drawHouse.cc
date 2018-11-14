@@ -15,7 +15,7 @@ void drawHouse( struct box *face )
     glPushMatrix();
     //glTranslatef(-2.0,0.0,0.0);
 
-    for(j=0;j<6;j++)
+    for(j = 0; j < 7; j++)
     {
 
         glColor3f(face[j].color.red,
@@ -23,13 +23,13 @@ void drawHouse( struct box *face )
                   face[j].color.blue);
 
         glBegin(GL_POLYGON);
-        for (i=0;i<4;i++)
-        {
-            glVertex3f(face[j].point[i].x,
-                       face[j].point[i].y,
-                       face[j].point[i].z);
-        }
-        glEnd();
+        	for (i=0;i<5;i++)
+        	{
+            		glVertex3f(face[j].point[i].x,
+				face[j].point[i].y,
+				face[j].point[i].z);
+		}
+	glEnd();
     }
 
     glPopMatrix();
