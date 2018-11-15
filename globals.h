@@ -11,6 +11,9 @@ extern vector<triangle> trianglelist;
 
 extern float deltaspin;
 extern float spin;
+extern vector3D deltarotate = vector3D(0.0, 0.0, 0.0);
+extern vector3D currentrotate = vector3D(0.0, 0.0, 0.0);
+
 extern vector3D scalarvect;
 extern int reflection;
 

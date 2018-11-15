@@ -6,9 +6,6 @@
 
 void display( void )
 {
-	glMatrixMode(GL_MODELVIEW);
-   	glLoadIdentity ();             /* clear the matrix */
-
 	/*
 	int vertCount = vertexlist.size();
 	vertex templist[vertCount*2];			//create temp array of current vertexlist
@@ -58,6 +55,9 @@ void display( void )
 
 	defineHouse(&faces[0]);
 
+	glMatrixMode(GL_MODELVIEW);
+   	glLoadIdentity ();             /* clear the matrix */
+
 	//gluLookAt (0.0, 0.0, 10.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
 	gluLookAt (16.0, 19.0, 12.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
 
@@ -65,7 +65,37 @@ void display( void )
   	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glColor3f(1.0, 1.0, 1.0);			//set color to white
-	glRecti(VIEWPORT_MIN_X, VIEWPORT_MIN_Y, VIEWPORT_MAX_X, VIEWPORT_MAX_Y);    //set viewport
+	//glRecti(VIEWPORT_MIN_X, VIEWPORT_MIN_Y, VIEWPORT_MAX_X, VIEWPORT_MAX_Y);    //set viewport
+
+	//***start of transformations
+	//***transfer all vertices from faces to temp and transfer it back
+	
+	int vertCount = vertexlist.size();
+	vertex templist[vertCount*2];			//create temp array of current vertexlist
+	vertex *tmp;					//pointer to temp array
+	tmp = &templist[0];
+	for(int i = 0; i < (vertCount*2); i++)		//clear out array
+	{
+		templist[i].x = 0.0;
+		templist[i].y = 0.0;
+		templist[i].z = 0.0;
+		templist[i].w = 0.0;
+	}
+
+	vector<vertex>::iterator it;
+	int index = 0;
+	for(it = vertexlist.begin(); it != vertexlist.end(); ++it)	//copy vertex points over to a temp array
+	{
+		templist[index].x = it -> x;
+		templist[index].y = it -> y;
+		templist[index].z = it -> z;
+		templist[index].w = it -> w;
+		index++;
+	}
+	
+	PipeLine(tmp, vertCount);		//apply transformations	 
+
+	//***end of transformations
 
 	drawAxes(20);
 	drawHouse(&faces[0]);
@@ -103,11 +133,19 @@ void spinDisplay(void)
 {
 	if(animState != stopanim)
 	{
-		spin = spin + deltaspin;
-		if (spin > 360.0)
-		{ 
-			spin = spin - 360.0;
-		}
+		currentrotate.x += deltarotate.x;
+		currentrotate.y += deltarotate.y;
+		currentrotate.z += deltarotate.z;
+
+		if(currentrotate.x > 360)
+			currentrotate.x -= 360.0;
+
+		if(currentrotate.y > 360)
+			currentrotate.y -= 360.0;
+
+		if(currentrotate.z > 360)
+			currentrotate.z -= 360.0;
+
 		glutPostRedisplay();
 	}
 }

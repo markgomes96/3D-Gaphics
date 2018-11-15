@@ -11,6 +11,10 @@ vector<triangle> trianglelist;
 
 float deltaspin = 0.0;				//rotation
 float spin = 0.0;
+
+vector3D deltarotate = vector3D(0.0, 0.0, 0.0);
+vector3D currentrotate = vector3D(0.0, 0.0, 0.0);
+
 vector3D scalarvect = vector3D(1.0, 1.0, 1.0);	//scaling
 int reflection = 1;				//reflection
 

@@ -8,63 +8,101 @@ void mouse( int button, int state, int x, int y )
 { 	
 	switch (button) 
 	{
+		int region = checkRegion(x, y);
+	
         	case GLUT_LEFT_BUTTON:
 		    	if (state == GLUT_DOWN)
 		    	{
-				if(checkBounds(x, y))		//point within bounds
+				if(region == 0)			//click in left region
 				{
-					if(deltaspin > -10.0)		//max CCW spin at 10 degrees per iteration
+					if(deltarotate.y > -10.0)		//max CCW spin at 10 degrees per iteration
 					{
-						deltaspin = deltaspin - 0.5;	//increase rotation in CCW
+						deltarotate.y += -0.5;		//decrement rotation in y-axis
 		        			glutIdleFunc(spinDisplay);
 					}
-					animState = playanim;
+					
 				}
-				else				//point outside bounds
+				else if(region == 1)		//click in right region
 				{
-					scalarvect.x += 0.05;		//increase scale
-					scalarvect.y += 0.05;
-					glutPostRedisplay();
+					if(deltarotate.x > -10.0)		//max CCW spin at 10 degrees per iteration
+					{
+						deltarotate.x += -0.5;		//decrement rotation in x-axis
+		        			glutIdleFunc(spinDisplay);
+					}
 				}
+				else if(region == 2)		//click in bottom region 
+				{
+					if(deltarotate.z > -10.0)		//max CCW spin at 10 degrees per iteration
+					{
+						deltarotate.z += -0.5;		//decrement rotation in z-axis
+		        			glutIdleFunc(spinDisplay);
+					}
+				}
+				animState = playanim;
 		    	}
             	break;
+
         	case GLUT_RIGHT_BUTTON:
 		    	if (state == GLUT_DOWN)
 		    	{
-				if(checkBounds(x, y))		//point within bounds
+				if(region == 0)			//click in left region
 				{
-					if(deltaspin < 10.0)		//max CW spin at 10 degrees per iteration
+					if(deltarotate.y < 10.0)		//max CW spin at 10 degrees per iteration
 					{
-						deltaspin = deltaspin + 0.5;	//increase rotation CW
+						deltarotate.y += 0.5;		//increment rotation in y-axis
 		        			glutIdleFunc(spinDisplay);
 					}
-					animState = playanim;
+					
 				}
-				else				//point outside bounds
+				else if(region == 1)		//click in right region
 				{
-					if(scalarvect.x > 0.0)		//prevent scale from reversing
+					if(deltarotate.x < 10.0)		//max CW spin at 10 degrees per iteration
 					{
-						scalarvect.x -= 0.05;		//decrease scale
-						scalarvect.y -= 0.05;
-						glutPostRedisplay();
+						deltarotate.x += 0.5;		//increment rotation in x-axis
+		        			glutIdleFunc(spinDisplay);
 					}
 				}
+				else if(region == 2)		//click in bottom region 
+				{
+					if(deltarotate.z < 10.0)		//max CW spin at 10 degrees per iteration
+					{
+						deltarotate.z += 0.5;		//increment rotation in z-axis
+		        			glutIdleFunc(spinDisplay);
+					}
+				}
+				animState = playanim;
 		    	}
             	break;
+
         	default:
             	break;
     	}
 }
 
-bool checkBounds(int x, int y)		//returns true is within bounds
+int checkRegion(int x, int y)		//returns region code for left[0], right[1], bottom[2]
 {
-	if(x > viewportMinX && x < viewportMaxX)
+	vertex center = vertex(WINDOW_MAX_X/2, WINDOW_MAX_Y/2, 0, 0);
+
+	if(x <= center.x)	//left screen
 	{
-		if(y > viewportMinY && y < viewportMaxY)
-		{
-			return true;
-		}
+		float divide = ( (center.y - 0.0) / (center.x - 0.0) ) * x;
+
+		if(y > divide)
+			return 0;
+		else
+			return 2;
+
 	}
+	else if(x > center.x)		//right screen
+	{
+		float divide = ( (0.0 - center.y) / (0.0 - center.x) ) * x;
+
+		if(y > divide)
+			return 0;
+		else
+			return 2;
+	}
+
 	return false;
 }
 
