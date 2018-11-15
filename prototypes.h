@@ -15,13 +15,16 @@ void drawHouse( struct box* );		//drawHouse.cc
 void applyTransformation( vertex* , int , float* );	//transmat.cc
 void matrixVectorMult( int , float* , float* );
 void buildTranslate( float , float , float , float* );
+void buildRotateX( float , float* );
+void buildRotateY( float , float* );
 void buildRotateZ( float , float* );
 void buildScale( vector3D , float* );
 void buildReflectVert( int , float* );
 
 void mouse( int , int , int , int );		//input.cc
-bool checkBounds( int , int );
+int checkRegion( int , int );
 void keyboard( unsigned char , int , int );
 void SpecialInput( int , int , int );
+float vectorMagnitude( vector3D );
 
 int main( int , char** );			//main.cc

@@ -24,10 +24,13 @@ int main(int argc, char** argv)
 	glLineWidth(1.0);
 	glShadeModel (GL_FLAT);
 
+	camerapos = startcampos;
+
 	glutMouseFunc(mouse);               //checks for user input
 	glutKeyboardFunc(keyboard);	 	
 	glutSpecialFunc(SpecialInput);
 	glutDisplayFunc(display);		    //display everyframe 
 	glutReshapeFunc(reshape);
+	glutIdleFunc(spinDisplay);
 	glutMainLoop();				        //enters event loop
 }

@@ -6,10 +6,9 @@
 
 void mouse( int button, int state, int x, int y )
 { 	
+	int region = checkRegion(x, WINDOW_MAX_Y - y);
 	switch (button) 
 	{
-		int region = checkRegion(x, y);
-	
         	case GLUT_LEFT_BUTTON:
 		    	if (state == GLUT_DOWN)
 		    	{
@@ -17,8 +16,8 @@ void mouse( int button, int state, int x, int y )
 				{
 					if(deltarotate.y > -10.0)		//max CCW spin at 10 degrees per iteration
 					{
-						deltarotate.y += -0.5;		//decrement rotation in y-axis
-		        			glutIdleFunc(spinDisplay);
+						deltarotate.y += -0.01;		//decrement rotation in y-axis
+		        			//glutIdleFunc(spinDisplay);
 					}
 					
 				}
@@ -26,16 +25,16 @@ void mouse( int button, int state, int x, int y )
 				{
 					if(deltarotate.x > -10.0)		//max CCW spin at 10 degrees per iteration
 					{
-						deltarotate.x += -0.5;		//decrement rotation in x-axis
-		        			glutIdleFunc(spinDisplay);
+						deltarotate.x += -0.01;		//decrement rotation in x-axis
+		        			//glutIdleFunc(spinDisplay);
 					}
 				}
 				else if(region == 2)		//click in bottom region 
 				{
 					if(deltarotate.z > -10.0)		//max CCW spin at 10 degrees per iteration
 					{
-						deltarotate.z += -0.5;		//decrement rotation in z-axis
-		        			glutIdleFunc(spinDisplay);
+						deltarotate.z += -0.01;		//decrement rotation in z-axis
+		        			//glutIdleFunc(spinDisplay);
 					}
 				}
 				animState = playanim;
@@ -49,7 +48,7 @@ void mouse( int button, int state, int x, int y )
 				{
 					if(deltarotate.y < 10.0)		//max CW spin at 10 degrees per iteration
 					{
-						deltarotate.y += 0.5;		//increment rotation in y-axis
+						deltarotate.y += 0.01;		//increment rotation in y-axis
 		        			glutIdleFunc(spinDisplay);
 					}
 					
@@ -58,7 +57,7 @@ void mouse( int button, int state, int x, int y )
 				{
 					if(deltarotate.x < 10.0)		//max CW spin at 10 degrees per iteration
 					{
-						deltarotate.x += 0.5;		//increment rotation in x-axis
+						deltarotate.x += 0.01;		//increment rotation in x-axis
 		        			glutIdleFunc(spinDisplay);
 					}
 				}
@@ -66,7 +65,7 @@ void mouse( int button, int state, int x, int y )
 				{
 					if(deltarotate.z < 10.0)		//max CW spin at 10 degrees per iteration
 					{
-						deltarotate.z += 0.5;		//increment rotation in z-axis
+						deltarotate.z += 0.01;		//increment rotation in z-axis
 		        			glutIdleFunc(spinDisplay);
 					}
 				}
@@ -88,22 +87,30 @@ int checkRegion(int x, int y)		//returns region code for left[0], right[1], bott
 		float divide = ( (center.y - 0.0) / (center.x - 0.0) ) * x;
 
 		if(y > divide)
-			return 0;
+		{
+			return 0; 
+		}
 		else
-			return 2;
+		{
+			return 2; 
+		}
 
 	}
 	else if(x > center.x)		//right screen
 	{
-		float divide = ( (0.0 - center.y) / (0.0 - center.x) ) * x;
+		float divide = WINDOW_MAX_Y + (((0.0 - WINDOW_MAX_Y) / (WINDOW_MAX_X - 0.0)) * x);
 
 		if(y > divide)
-			return 0;
+		{
+			return 0; 
+		}
 		else
-			return 2;
+		{
+			return 2; 
+		}
 	}
 
-	return false;
+	return -1;
 }
 
 void keyboard( unsigned char key, int x, int y )
@@ -146,55 +153,31 @@ void keyboard( unsigned char key, int x, int y )
 
 void SpecialInput(int key, int x, int y)
 {
+	float magnitude = vectorMagnitude(vector3D(targetpos.x - camerapos.x, targetpos.y - camerapos.y, targetpos.z - camerapos.z));
 	switch(key)		//moves the center point 5 pixels in inputed direction
 	{
-		case GLUT_KEY_UP:
-			if(resizeBoundMode)
+		case GLUT_KEY_PAGE_UP:
+			if(magnitude > 3.0)
 			{
-				viewportMinY -= 5;
-				viewportMaxY += 5;
+				camerapos.x -= ((camerapos.x / magnitude) * 0.8);
+				camerapos.y -= ((camerapos.y / magnitude) * 0.8);
+				camerapos.z -= ((camerapos.z / magnitude) * 0.8);
 			}
-			else
-			{
-				cp.y += 5;
-			}
-			break;
+		break;
 			
-		case GLUT_KEY_DOWN:
-			if(resizeBoundMode)
-			{
-				viewportMinY += 5;
-				viewportMaxY -= 5;
-			}
-			else
-			{
-				cp.y -= 5;
-			}
-			break;
-			
-		case GLUT_KEY_LEFT:
-			if(resizeBoundMode)
-			{
-				viewportMinX += 5;
-				viewportMaxX -= 5;
-			}
-			else
-			{
-				cp.x -= 5;
-			}
-			break;
-			
-		case GLUT_KEY_RIGHT:
-			if(resizeBoundMode)
-			{
-				viewportMinX -= 5;
-				viewportMaxX += 5;
-			}
-			else
-			{
-				cp.x += 5;
-			}
-			break;
+		case GLUT_KEY_PAGE_DOWN:
+			camerapos.x += ((camerapos.x / magnitude) * 0.8);
+			camerapos.y += ((camerapos.y / magnitude) * 0.8);
+			camerapos.z += ((camerapos.z / magnitude) * 0.8);
+		break;
 	}
 	glutPostRedisplay();
 }
+
+float vectorMagnitude(vector3D v1)
+{
+    float vm;
+    vm  = sqrt((v1.x * v1.x) + (v1.y * v1.y) + (v1.z * v1.z));
+    return vm;
+}
+

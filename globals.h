@@ -11,8 +11,12 @@ extern vector<triangle> trianglelist;
 
 extern float deltaspin;
 extern float spin;
-extern vector3D deltarotate = vector3D(0.0, 0.0, 0.0);
-extern vector3D currentrotate = vector3D(0.0, 0.0, 0.0);
+extern vector3D deltarotate;
+extern vector3D currentrotate;
+
+extern vector3D startcampos;
+extern vector3D camerapos;
+extern vector3D targetpos;
 
 extern vector3D scalarvect;
 extern int reflection;

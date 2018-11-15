@@ -27,7 +27,7 @@ run: main.o $(INCLUDES) $(HEADERS) $(PROTOTYPES) $(GLOBALS) $(OBJS)
 display.o : display.cc $(INCLUDES) $(HEADERS) $(PROTOTYPES) $(GLOBALS)
 	$(C++) -c display.cc
 
-reshape.o : reshape.cc $(INCLUDES) $(PROTOTYPES)
+reshape.o : reshape.cc $(INCLUDES) $(PROTOTYPES) $(GLOBALS)
 	$(C++) -c reshape.cc
 
 drawAxis.o : drawAxis.cc $(INCLUDES) $(PROTOTYPES)

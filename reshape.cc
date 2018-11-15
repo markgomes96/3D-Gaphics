@@ -3,6 +3,7 @@
 
 #include "includes.h"
 #include "prototypes.h"
+#include "globals.h"
 
 void reshape (int w, int h)
 {
@@ -11,7 +12,7 @@ void reshape (int w, int h)
 	glLoadIdentity ();
 	//glFrustum (-400.0, 400.0, -400.0, 400.0, 10.0, 30.0);
 	//glFrustum (-1.0, 1.0, -1.0, 1.0, 6, 20.0);
-	gluPerspective(60.0, 1, 1.5, 40.0); 
+	gluPerspective(60.0, 1, 1.5, pow(vectorMagnitude(camerapos),2));
 	//glOrtho   (-10.0, 10.0, -10.0, 10.0, 1.0, 20.0);
 
 	glMatrixMode (GL_MODELVIEW);
