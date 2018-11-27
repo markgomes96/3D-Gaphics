@@ -51,6 +51,6 @@ main.o : main.cc $(INCLUDES) $(HEADERS) $(PROTOTYPES) $(OBJS)
 clean :
 	rm *.o
 
-reset :
+pristine :
 	rm *.o
 	rm run
