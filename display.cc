@@ -6,24 +6,33 @@
 
 void display( void )
 {
-	struct box faces[7];
+	if(displayState == Custom)	//constantly reshape window if in Custom display state
+		reshape(800, 800);
 
-	defineHouse(&faces[0]);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+	glMatrixMode(GL_PROJECTION);		//set up 2D viewing
+	glPushMatrix();
+	glLoadIdentity();
+	gluOrtho2D(0.0, WINDOW_MAX_X, 0.0, WINDOW_MAX_Y);
 	glMatrixMode(GL_MODELVIEW);
-   	glLoadIdentity ();             /* clear the matrix */
 
-	//gluLookAt (0.0, 0.0, 10.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+	drawCustomViewInput();		//draw custom view input
+
+	glMatrixMode(GL_PROJECTION);
+	glPopMatrix();
+	glMatrixMode(GL_MODELVIEW);
+
+	glLoadIdentity ();             /* clear the matrix */
+	glMatrixMode(GL_MODELVIEW);
+	glEnable(GL_DEPTH_TEST);		//convert to 3D
+	glPushMatrix();
 	gluLookAt (camerapos.x, camerapos.y, camerapos.z, targetpos.x, targetpos.y, targetpos.z, 0.0, 0.0, 1.0);
 
-	glEnable(GL_DEPTH_TEST);
-  	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	glColor3f(1.0, 1.0, 1.0);			//set color to white
-	//glRecti(VIEWPORT_MIN_X, VIEWPORT_MIN_Y, VIEWPORT_MAX_X, VIEWPORT_MAX_Y);    //set viewport
+	struct box faces[7];		//define house points
+	defineHouse(&faces[0]);
 
 	//***transformations***
-	
 	int vertCount = 7 * 5;		//number of faces * number of vertices
 	vertex templist[vertCount];			//create temp array of current vertexlist
 	vertex *tmp;					//pointer to temp array
@@ -50,7 +59,6 @@ void display( void )
 		}
 	}
 	
-
 	if(animState == stopanim)	//stop rotating animation
 	{
 		deltarotate.x = 0;
@@ -96,18 +104,22 @@ void display( void )
 
 	//***Drawing house, axes, sign to screen***
 
-	if(displayAxes)
+	if(displayAxes)			//draw axes
 		drawAxes(20);
 
-	drawHouse(&faces[0], (int)fillHouse);
+	drawHouse(&faces[0], (int)fillHouse);		//draw house
 
-	if(displayRoofSign)
+	if(displayRoofSign)			//draw roof sign
 	{
+		glColor3f(1.0, 1.0, 1.0);
+		glLineWidth(4.0);
 		char *charString = (char*)malloc(40*sizeof(char));		//define memory to hold string
 		sprintf(charString, "Hello World!");		//put data in string
-		drawString(faces[6].point[2].x, faces[6].point[2].y, faces[6].point[2].z, charString);	//place string on display
+		drawStringStroke(faces[6].point[2].x + 0.001, faces[6].point[2].y + 0.001, faces[6].point[2].z + 0.001, charString);	//place string on display
 		free(charString);	//clean up
+		glLineWidth(1.0);
 	}
+	glPopMatrix();	
 
 	glutSwapBuffers(); 				//swap buffers to draw new frame
 }
@@ -150,7 +162,55 @@ void spinDisplay(void)
 	}
 }
 
-void drawString(float x, float y, float z, char* text)
+void drawCustomViewInput()
+{
+	const char* perspHeaders[] = {"FOVY", "ASPECT", "ZNEAR", "ZFAR"};
+	float sx = 450.0;
+	float sy = 750.0;	
+
+	char *charString = (char*)malloc(40*sizeof(char));
+
+	if(displayState == Persp)	
+		sprintf(charString, "Perspective");
+	else if(displayState == Ortho)
+		sprintf(charString, "Orthographic");
+	else if(displayState == Custom)
+		sprintf(charString, "Custom");
+
+	drawStringBitmap( sx - 120, sy , charString );
+	free(charString);
+
+	for(int i = 0; i < 4; i++)		//draw parameter titles
+	{
+		char *charString = (char*)malloc(40*sizeof(char));		
+		sprintf(charString, (char*)perspHeaders[i]);
+		drawStringBitmap( sx + (i * 80), sy , charString );
+		free(charString);
+	}
+
+	for(int i = 0; i < 4; i++)		//draw parameter input boxes
+	{
+		char *charString = (char*)malloc(40*sizeof(char));
+
+		if(displayState == Persp || displayState == Ortho)	
+			sprintf(charString, "%.4f", perspParm[i]);
+		else if(displayState == Custom)
+			sprintf(charString, "%.4f", custParm[i]);
+
+		drawStringBitmap( sx + (i * 80), sy - 25 , charString );
+		free(charString);
+	}
+}
+
+void drawStringBitmap(float x, float y, char* text)
+{
+	const char *c;
+	glRasterPos2f(x, y);
+	for(c = text; *c != '\0'; c++)
+		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, *c);
+}
+
+void drawStringStroke(float x, float y, float z, char* text)
 {
 	double angle = (atan(3.0/5.0) * 180) / M_PI;
 
@@ -162,7 +222,7 @@ void drawString(float x, float y, float z, char* text)
 	glRotatef(-currentrotate.y, 0.0, 1.0, 0.0);
 	glRotatef(angle - currentrotate.x, 1.0, 0.0, 0.0);   	
 	
-	glScalef(0.011, 0.038, 0.012);
+	glScalef(0.014, 0.039, 0.012);
 
 	for( char* p = text; *p; p++)
 	{

@@ -25,4 +25,11 @@ extern bool fillHouse;
 extern bool displayAxes;
 extern bool displayRoofSign;
 
+extern double perspParm[];
+extern double custParm[];
+
+extern bool editmode;
+extern char input[];
+extern int editindex;
+
 #endif

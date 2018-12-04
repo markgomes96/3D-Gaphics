@@ -1,7 +1,7 @@
 #ifndef STRUCTS
 #define STRUCTS
 
-enum DisplayState { outline, tessfill, tesstriangle };
+enum DisplayState { Persp, Ortho, Custom };
 enum AnimState { playanim, stopanim, resetanim, hardresetanim};
 
 typedef struct vertex 

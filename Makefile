@@ -39,7 +39,7 @@ defineHouse.o : defineHouse.cc $(INCLUDES) $(PROTOTYPES) $(HEADERS)
 drawHouse.o : drawHouse.cc $(INCLUDES) $(PROTOTYPES) $(HEADERS)
 	$(C++) -c drawHouse.cc
 
-input.o : input.cc $(INCLUDES) $(HEADERS) $(GLOBALS)
+input.o : input.cc $(INCLUDES) $(HEADERS) $(GLOBALS) $(PROTOTYPES)
 	$(C++) -c input.cc
 
 transmat.o : transmat.cc $(INCLUDES) $(HEADERS) $(PROTOTYPES) $(GLOBALS)

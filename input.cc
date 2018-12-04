@@ -77,56 +77,71 @@ void mouse( int button, int state, int x, int y )
 int checkRegion(int x, int y)		//returns region code for left[0], right[1], bottom[2]
 {
 	vertex center = vertex(WINDOW_MAX_X/2, WINDOW_MAX_Y/2, 0, 0);
-
-	if(x <= center.x)	//left screen
+	editmode = false;	//if you click anywhere else reset editmode
+	if(x > 400 && y > 700)	//buffer zone
 	{
-		float divide = ( (center.y - 0.0) / (center.x - 0.0) ) * x;
-
-		if(y > divide)
+		int count = 0;
+		for(int i = 450; i < 770; i = i + 80)
 		{
-			return 0; 
-		}
-		else
-		{
-			return 2; 
-		}
-
-	}
-	else if(x > center.x)		//right screen
-	{
-		float divide = WINDOW_MAX_Y + (((0.0 - WINDOW_MAX_Y) / (WINDOW_MAX_X - 0.0)) * x);
-
-		if(y > divide)
-		{
-			return 1; 
-		}
-		else
-		{
-			return 2; 
+			if(x > i && x < (i+80) && y > 725 && y < 750)	//check if click was inside cell
+			{
+				cout << count << endl;
+				editmode = true;
+				editindex = count;
+			}
+			count++;
 		}
 	}
+	else
+	{
+		if(x <= center.x)	//left screen
+		{
+			float divide = ( (center.y - 0.0) / (center.x - 0.0) ) * x;
 
-	return -1;
+			if(y > divide)
+			{
+				return 0; 
+			}
+			else
+			{
+				return 2; 
+			}
+
+		}
+		else if(x > center.x)		//right screen
+		{
+			float divide = WINDOW_MAX_Y + (((0.0 - WINDOW_MAX_Y) / (WINDOW_MAX_X - 0.0)) * x);
+
+			if(y > divide)
+			{
+				return 1; 
+			}
+			else
+			{
+				return 2; 
+			}
+		}
+	}
+	return -10;
 }
 
 void keyboard( unsigned char key, int x, int y )
-{ 
-	/*HANDLED BY DROP DOWN MENU
-	if ( key == 'f' || key == 'F')		// Fill the polygon in with tesselation
+{ 	
+	if(editmode)
 	{
-		displayState = tessfill;
-	}	
-	if ( key == 't' || key == 'T')		// Display outlines of triangles used in tesselation
-	{
-		displayState = tesstriangle;
+		if (checkValidNumInput(key))
+		{
+			cout << key << endl;
+			input += key;
+		}
+		else if(int(key) == 13)
+		{
+			//cout << input << endl;
+			cout << editindex << " : " << input << endl;
+			editmode = false;
+		}
 	}
-	if ( key == 'l' || key == 'L')		// Return polyon to an outline
-	{
-		displayState = outline;
-	}
-	*/
 
-	
 	if ( key == 's' || key == 'S')		//stops any animations
 	{
 		animState = stopanim;
@@ -158,6 +173,8 @@ void SpecialInput(int key, int x, int y)
 				camerapos.x -= ((camerapos.x / magnitude) * 0.8);
 				camerapos.y -= ((camerapos.y / magnitude) * 0.8);
 				camerapos.z -= ((camerapos.z / magnitude) * 0.8);
+				perspParm[3] = pow(vectorMagnitude(camerapos),2);	//adjust far value
+				custParm[3] = pow(vectorMagnitude(camerapos),2);
 			}
 		break;
 			
@@ -165,6 +182,8 @@ void SpecialInput(int key, int x, int y)
 			camerapos.x += ((camerapos.x / magnitude) * 0.8);
 			camerapos.y += ((camerapos.y / magnitude) * 0.8);
 			camerapos.z += ((camerapos.z / magnitude) * 0.8);
+			perspParm[3] = pow(vectorMagnitude(camerapos),2);	//adjust far value
+			custParm[3] = pow(vectorMagnitude(camerapos),2);
 		break;
 	}
 	glutPostRedisplay();
@@ -175,5 +194,13 @@ float vectorMagnitude(vector3D v1)
     float vm;
     vm  = sqrt((v1.x * v1.x) + (v1.y * v1.y) + (v1.z * v1.z));
     return vm;
+}
+
+bool checkValidNumInput(unsigned char c)
+{
+	if(isdigit(c) || c == '.')
+		return true;
+	else
+		return false;
 }
 

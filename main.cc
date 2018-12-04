@@ -57,10 +57,25 @@ void createMenu(void)
 	glutAttachMenu(GLUT_MIDDLE_BUTTON);	//activate with middle mouse button
 }
 
-void menu(int val)
+void menu(int val)		//handles menu input
 {
 	switch(val)
 	{
+		case 0:
+			displayState = Persp;
+			reshape(800, 800);
+		break;
+
+		case 1:
+			displayState = Ortho;
+			reshape(800, 800);
+		break;
+
+		case 2:
+			displayState = Custom;
+			reshape(800, 800);
+		break;
+
 		case 3:
 			if(fillHouse)
 				fillHouse = false;

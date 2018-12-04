@@ -15,6 +15,7 @@ void drawAxes(int length)
 
     // Select the Stroke font we want to use
     void *font = GLUT_STROKE_ROMAN;
+	glColor3f(1.0, 1.0, 1.0);
 
     // This provides a coordinate axis about the origin. 
     glPointSize(1.0);
@@ -35,7 +36,7 @@ void drawAxes(int length)
 
     // Z - Label
     glPushMatrix();
-    glTranslatef(-0.2, 0.2, 4);
+    glTranslatef(-0.2, 0.2, 13.0);
     glRotatef(90.0, 0.0, 0.0, 1.0);
     glRotatef(90.0, 1.0, 0.0, 0.0);
     glScalef(0.01,0.01,0.01);
@@ -47,7 +48,7 @@ void drawAxes(int length)
 
     // Y - Label
     glPushMatrix();
-    glTranslatef(0.0, 4, -.4);
+    glTranslatef(0.0, 13.0, -0.4);
     glRotatef(90.0, 0.0, 0.0, 1.0);
     glRotatef(90.0, 1.0, 0.0, 0.0);
     glScalef(0.01,0.01,0.01);
@@ -59,7 +60,7 @@ void drawAxes(int length)
 
     // X - Label 
     glPushMatrix();
-    glTranslatef(4.0, 0.0, -.4);
+    glTranslatef(13.0, 0.0, -0.4);
     glRotatef(90.0, 0.0, 0.0, 1.0);
     glRotatef(90.0, 0.0, 1.0, 0.0);
     glScalef(0.01,0.01,0.01);

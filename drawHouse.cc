@@ -23,6 +23,8 @@ void drawHouse(struct box *face, int drawmode)		//0->wireframe, 1->filled
 
 		if(drawmode == 0)
 		{
+			glColor3f(0.0, 1.0, 0.0);
+
 			glBegin( GL_LINE_LOOP );
 				for (i=0;i<5;i++)
 				{
@@ -34,6 +36,10 @@ void drawHouse(struct box *face, int drawmode)		//0->wireframe, 1->filled
 		}
 		else if(drawmode == 1)
 		{
+			glColor3f(face[j].color.red,
+			  face[j].color.green,
+			  face[j].color.blue);
+
 			glBegin( GL_POLYGON );
 				for (i=0;i<5;i++)
 				{

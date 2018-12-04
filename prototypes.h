@@ -3,7 +3,9 @@
 void display( void );			//display.cc
 void PipeLine( vertex* , int );
 void spinDisplay( void );
-void drawString( float , float , float , char* );
+void drawCustomViewInput();
+void drawStringBitmap( float , float , char* );
+void drawStringStroke( float , float , float , char* );
 
 void reshape ( int , int );		//reshape.cc
 
@@ -27,5 +29,6 @@ int checkRegion( int , int );
 void keyboard( unsigned char , int , int );
 void SpecialInput( int , int , int );
 float vectorMagnitude( vector3D );
+bool checkValidNumInput( unsigned char );
 
 int main( int , char** );			//main.cc
