@@ -22,8 +22,8 @@ vector3D targetpos = vector3D(0.0, 0.0, 2.5);
 DisplayState displayState = outline;		//states
 AnimState animState = playanim;
 
-bool fillHouse = false;				//dropdown menu
-bool displayAxes = false;
-bool displayRoofSign = false;
+bool fillHouse;				//dropdown menu
+bool displayAxes;
+bool displayRoofSign;
 
 #endif

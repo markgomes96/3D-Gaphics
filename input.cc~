@@ -17,6 +17,7 @@ void mouse( int button, int state, int x, int y )
 					if(deltarotate.y > -10.0)		//max CCW spin at 10 degrees per iteration
 					{
 						deltarotate.y += -0.01;		//decrement rotation in y-axis
+		        			//glutIdleFunc(spinDisplay);
 					}
 					
 				}
@@ -25,6 +26,7 @@ void mouse( int button, int state, int x, int y )
 					if(deltarotate.x > -10.0)		//max CCW spin at 10 degrees per iteration
 					{
 						deltarotate.x += -0.01;		//decrement rotation in x-axis
+		        			//glutIdleFunc(spinDisplay);
 					}
 				}
 				else if(region == 2)		//click in bottom region 
@@ -32,6 +34,7 @@ void mouse( int button, int state, int x, int y )
 					if(deltarotate.z > -10.0)		//max CCW spin at 10 degrees per iteration
 					{
 						deltarotate.z += -0.01;		//decrement rotation in z-axis
+		        			//glutIdleFunc(spinDisplay);
 					}
 				}
 				animState = playanim;
@@ -46,6 +49,7 @@ void mouse( int button, int state, int x, int y )
 					if(deltarotate.y < 10.0)		//max CW spin at 10 degrees per iteration
 					{
 						deltarotate.y += 0.01;		//increment rotation in y-axis
+		        			//glutIdleFunc(spinDisplay);
 					}
 					
 				}
@@ -54,6 +58,7 @@ void mouse( int button, int state, int x, int y )
 					if(deltarotate.x < 10.0)		//max CW spin at 10 degrees per iteration
 					{
 						deltarotate.x += 0.01;		//increment rotation in x-axis
+		        			//glutIdleFunc(spinDisplay);
 					}
 				}
 				else if(region == 2)		//click in bottom region 
@@ -61,6 +66,7 @@ void mouse( int button, int state, int x, int y )
 					if(deltarotate.z < 10.0)		//max CW spin at 10 degrees per iteration
 					{
 						deltarotate.z += 0.01;		//increment rotation in z-axis
+		        			//glutIdleFunc(spinDisplay);
 					}
 				}
 				animState = playanim;

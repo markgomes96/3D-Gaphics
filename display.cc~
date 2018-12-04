@@ -101,13 +101,10 @@ void display( void )
 
 	drawHouse(&faces[0], (int)fillHouse);
 
-	if(displayRoofSign)
-	{
-		char *charString = (char*)malloc(40*sizeof(char));		//define memory to hold string
-		sprintf(charString, "Hello World!");		//put data in string
-		drawString(faces[6].point[2].x, faces[6].point[2].y, faces[6].point[2].z, charString);	//place string on display
-		free(charString);	//clean up
-	}
+	char *charString = (char*)malloc(40*sizeof(char));		//define memory to hold string
+	sprintf(charString, "Hello World!");		//put data in string
+	drawString(faces[6].point[2].x, faces[6].point[2].y, faces[6].point[2].z, charString);	//place string on display
+	free(charString);	//clean up
 
 	glutSwapBuffers(); 				//swap buffers to draw new frame
 }

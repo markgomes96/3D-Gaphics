@@ -3,7 +3,8 @@
 void display( void );			//display.cc
 void PipeLine( vertex* , int );
 void spinDisplay( void );
-void drawString( float , float , float , char* );
+void drawString( float , float , float , void* , const char* );
+void output( GLfloat , GLfloat , char* );
 
 void reshape ( int , int );		//reshape.cc
 

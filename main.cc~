@@ -48,7 +48,7 @@ void createMenu(void)
 	
 	int mainmenu = glutCreateMenu(menu);	//create the menu
  
-	glutAddSubMenu("[Options] View Type", panel1);			//add panels to menu
+	glutAddSubMenu("Panel 1", panel1);			//add panels to menu
 	glutAddMenuEntry("[Toggle] Filled Surfaces", 3);
 	glutAddMenuEntry("[Toggle] Axes", 4);
 	glutAddMenuEntry("[Toggle] Roof Sign", 5);

@@ -38,7 +38,7 @@ void drawAxes(int length)
     glTranslatef(-0.2, 0.2, 4);
     glRotatef(90.0, 0.0, 0.0, 1.0);
     glRotatef(90.0, 1.0, 0.0, 0.0);
-    glScalef(0.01,0.01,0.01);
+    glScalef(0.002,0.002,0.002);
     len = (int) strlen(zaxis);
     for (i = 0; i < len; i++) {
         glutStrokeCharacter(font, zaxis[i]);
@@ -50,7 +50,7 @@ void drawAxes(int length)
     glTranslatef(0.0, 4, -.4);
     glRotatef(90.0, 0.0, 0.0, 1.0);
     glRotatef(90.0, 1.0, 0.0, 0.0);
-    glScalef(0.01,0.01,0.01);
+    glScalef(0.002,0.002,0.002);
     len = (int) strlen(yaxis);
     for (i = 0; i < len; i++) {
         glutStrokeCharacter(font, yaxis[i]);
@@ -62,7 +62,7 @@ void drawAxes(int length)
     glTranslatef(4.0, 0.0, -.4);
     glRotatef(90.0, 0.0, 0.0, 1.0);
     glRotatef(90.0, 0.0, 1.0, 0.0);
-    glScalef(0.01,0.01,0.01);
+    glScalef(0.002,0.002,0.002);
     len = (int) strlen(xaxis);
     for (i = 0; i < len; i++) {
         glutStrokeCharacter(font, xaxis[i]);
