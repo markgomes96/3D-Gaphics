@@ -31,6 +31,7 @@ int main(int argc, char** argv)
 	createMenu();
 
 	glutMouseFunc(mouse);               //checks for user input
+	glutMotionFunc(motion);
 	glutKeyboardFunc(keyboard);	 	
 	glutSpecialFunc(SpecialInput);
 	glutDisplayFunc(display);		    //display everyframe 

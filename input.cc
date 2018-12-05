@@ -6,7 +6,8 @@
 
 void mouse( int button, int state, int x, int y )
 { 	
-	int region = checkRegion(x, WINDOW_MAX_Y - y);
+	int region = checkRegion(x, WINDOW_MAX_Y - y, state);
+
 	switch (button) 
 	{
         	case GLUT_LEFT_BUTTON:
@@ -47,7 +48,6 @@ void mouse( int button, int state, int x, int y )
 					{
 						deltarotate.y += 0.01;		//increment rotation in y-axis
 					}
-					
 				}
 				else if(region == 1)		//click in right region
 				{
@@ -74,22 +74,52 @@ void mouse( int button, int state, int x, int y )
 	glutIdleFunc(spinDisplay);
 }
 
-int checkRegion(int x, int y)		//returns region code for left[0], right[1], bottom[2]
+void motion(int x, int y)
 {
+	float screeny = (float)(WINDOW_MAX_Y - y);
+
+	cout << "y : " << screeny << endl;
+
+	if(dragmode && screeny > 0)
+	{
+		if(screeny - dragstarty > 0)
+			custParm[editindex] += 1;
+		else if(screeny - dragstarty < 0)
+			custParm[editindex] -= 1;
+	}
+	dragstarty = screeny;
+}
+
+int checkRegion(int x, int y, int state)		//returns region code for left[0], right[1], bottom[2]
+{
+	if(dragmode)
+		dragmode = false;
+
 	vertex center = vertex(WINDOW_MAX_X/2, WINDOW_MAX_Y/2, 0, 0);
 	editmode = false;	//if you click anywhere else reset editmode
 	if(x > 400 && y > 700)	//buffer zone
 	{
-		int count = 0;
-		for(int i = 450; i < 770; i = i + 80)
+		if(displayState == Custom)	//only edit when in Custom view
 		{
-			if(x > i && x < (i+80) && y > 725 && y < 750)	//check if click was inside cell
+			int count = 0;
+			for(int i = 440; i < 780; i = i + 85)
 			{
-				cout << count << endl;
-				editmode = true;
-				editindex = count;
+				if(x > i && x < (i+80) && y > 715 && y < 745)	//check if click was inside cell
+				{
+					if(state == 0 && !dragmode)
+					{
+						dragmode = true;
+						editindex = count;
+						dragstarty = y;
+					}
+					else if(state == 1)
+					{
+						editmode = true;
+						editindex = count;
+					}
+				}
+				count++;
 			}
-			count++;
 		}
 	}
 	else
@@ -122,6 +152,7 @@ int checkRegion(int x, int y)		//returns region code for left[0], right[1], bott
 			}
 		}
 	}
+
 	return -10;
 }
 
@@ -131,13 +162,12 @@ void keyboard( unsigned char key, int x, int y )
 	{
 		if (checkValidNumInput(key))
 		{
-			cout << key << endl;
 			input += key;
 		}
-		else if(int(key) == 13)
+		else if(int(key) == 13 && !input.empty())
 		{
-			//cout << input << endl;
-			cout << editindex << " : " << input << endl;
+			custParm[editindex] = stod(input);
+			input.clear();
 			editmode = false;
 		}
 	}

@@ -79,6 +79,8 @@ void display( void )
 	if(animState == hardresetanim)	//reset house / camera
 	{
 		//***add in reset to camera perspective
+		custParm[0] = perspParm[0];		//finish hard reset
+
 		camerapos = startcampos;
 		currentrotate.x = 0.0;
 		currentrotate.y = 0.0;
@@ -166,7 +168,7 @@ void drawCustomViewInput()
 {
 	const char* perspHeaders[] = {"FOVY", "ASPECT", "ZNEAR", "ZFAR"};
 	float sx = 450.0;
-	float sy = 750.0;	
+	float sy = 750.0;
 
 	char *charString = (char*)malloc(40*sizeof(char));
 
@@ -180,6 +182,7 @@ void drawCustomViewInput()
 	drawStringBitmap( sx - 120, sy , charString );
 	free(charString);
 
+	glColor3f(0.0, 1.0, 0.0);
 	for(int i = 0; i < 4; i++)		//draw parameter titles
 	{
 		char *charString = (char*)malloc(40*sizeof(char));		
@@ -190,6 +193,13 @@ void drawCustomViewInput()
 
 	for(int i = 0; i < 4; i++)		//draw parameter input boxes
 	{
+		if(dragmode && i == editindex)
+			glColor3f(0.0, 0.0, 1.0);	//change color to blue to indicate dragging
+		else if(editmode && i == editindex)
+			glColor3f(1.0, 0.0, 0.0);	//change color to red to indicate editing
+		else
+			glColor3f(1.0, 1.0, 1.0);	//change color to white
+
 		char *charString = (char*)malloc(40*sizeof(char));
 
 		if(displayState == Persp || displayState == Ortho)	
@@ -200,6 +210,31 @@ void drawCustomViewInput()
 		drawStringBitmap( sx + (i * 80), sy - 25 , charString );
 		free(charString);
 	}
+
+	///***gllookat custom inputs
+	/*
+	const char* camsetupHeaders[] = {"EyeX", "EyeY", "EyeZ", "CenterX", "CenterY", "CenterZ", "UpX", "UpY", "UpZ"};
+	sx = 100.0;
+	sy = 715.0;
+
+	glColor3f(0.0, 1.0, 0.0);
+	for(int i = 0; i < 9; i++)		//draw parameter titles
+	{
+		char *charString = (char*)malloc(40*sizeof(char));		
+		sprintf(charString, (char*)camsetupHeaders[i]);
+		drawStringBitmap( sx + (i * 80), sy , charString );
+		free(charString);
+	}
+
+	glColor3f(1.0, 1.0, 1.0);
+	for(int i = 0; i < 9; i++)		//draw parameter input boxes
+	{
+		char *charString = (char*)malloc(40*sizeof(char));	
+		sprintf(charString, "%.4f", 0.0000);
+		drawStringBitmap( sx + (i * 80), sy - 25 , charString );
+		free(charString);
+	}
+	*/
 }
 
 void drawStringBitmap(float x, float y, char* text)

@@ -28,8 +28,10 @@ extern bool displayRoofSign;
 extern double perspParm[];
 extern double custParm[];
 
+extern bool dragmode;
 extern bool editmode;
-extern char input[];
+extern string input;
 extern int editindex;
+extern float dragstarty;
 
 #endif

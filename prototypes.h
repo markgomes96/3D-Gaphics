@@ -25,7 +25,8 @@ void buildScale( vector3D , float* );
 void buildReflectVert( int , float* );
 
 void mouse( int , int , int , int );		//input.cc
-int checkRegion( int , int );
+void motion( int , int );
+int checkRegion( int , int , int );
 void keyboard( unsigned char , int , int );
 void SpecialInput( int , int , int );
 float vectorMagnitude( vector3D );

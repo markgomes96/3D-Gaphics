@@ -15,9 +15,9 @@ float spin = 0.0;
 vector3D deltarotate = vector3D(0.0, 0.0, 0.0);
 vector3D currentrotate = vector3D(0.0, 0.0, 0.0);
 
-vector3D startcampos = vector3D(16.0, 19.0, 12.0);
+vector3D startcampos = vector3D(35*(0.58), 35*(0.69), 35*(0.435));
 vector3D camerapos;
-vector3D targetpos = vector3D(0.0, 0.0, 2.5);
+vector3D targetpos = vector3D(0.0, 0.0, 0.0);
 
 DisplayState displayState = Persp;		//states
 AnimState animState = playanim;
@@ -29,8 +29,10 @@ bool displayRoofSign = false;
 double perspParm[] = {60.0, 1.0, 1.5, 761.0};
 double custParm[] = {60.0, 1.0, 1.5, 761.0};
 
+bool dragmode = false;
 bool editmode = false;
-char input[15];
+string input = "";
 int editindex = -1;
+float dragstarty = 0.0;
 
 #endif
