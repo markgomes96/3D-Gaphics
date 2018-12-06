@@ -14,6 +14,11 @@ void menu(int value);
 
 int main(int argc, char** argv)
 {	
+  cout << "To change the view : " << endl;
+  cout << "[1] Open drop-down menu and select (View Type), then select (Custom)" << endl;
+  cout << "[2] Click and Release on custom values at top right to edit values" << endl;
+  cout << "[3] Click and Drag on custom values to increment values" << endl;
+
 	glutInit(&argc,argv);
 	glutInitDisplayMode (GLUT_DEPTH | GLUT_SINGLE | GLUT_RGB);        //***step 3
 	glutInitWindowSize(WINDOW_MAX_X, WINDOW_MAX_Y); 		                // set pixel window

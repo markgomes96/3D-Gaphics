@@ -78,8 +78,6 @@ void motion(int x, int y)
 {
 	float screeny = (float)(WINDOW_MAX_Y - y);
 
-	cout << "y : " << screeny << endl;
-
 	if(dragmode && screeny > 0)
 	{
 		if(screeny - dragstarty > 0)
