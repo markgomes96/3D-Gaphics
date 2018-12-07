@@ -79,10 +79,10 @@ void display( void )
 	if(animState == hardresetanim)	//reset house / camera
 	{
 		custParm[0] = perspParm[0];    //reset custom view values
-    custParm[1] = perspParm[1];
-    custParm[2] = perspParm[2];
-    custParm[3] = perspParm[3];
-    displayState = Persp;          //change view to persp
+		custParm[1] = perspParm[1];
+		custParm[2] = perspParm[2];
+		custParm[3] = perspParm[3];
+		displayState = Persp;          //change view to persp
     
 		camerapos = startcampos;
 		currentrotate.x = 0.0;

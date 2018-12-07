@@ -181,6 +181,8 @@ void keyboard( unsigned char key, int x, int y )
 	if ( key == 'R')		//reset house -> original position / size; reset camera -> original position / perspective
 	{
 		animState = hardresetanim;
+		displayState = Persp;  
+		reshape(800, 800);
 	}
 	if ( key == 'q' || key == 'Q') 		//exit the program
 	{
